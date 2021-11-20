@@ -14,9 +14,8 @@ omegat {
 }
 
 dependencies {
-    packIntoJar("io.github.eb4j:mdict4j:0.1.2")
+    packIntoJar("io.github.eb4j:mdict4j:0.1.4")
     packIntoJar("org.jsoup:jsoup:1.14.3")
-    testImplementation("junit:junit:4.13.2")
 }
 
 repositories {

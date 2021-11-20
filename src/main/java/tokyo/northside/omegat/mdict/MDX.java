@@ -35,9 +35,7 @@ public class MDX implements IDictionary {
     public List<DictionaryEntry> readArticlesPredictive(String word) throws Exception {
         List<DictionaryEntry> result = new ArrayList<>();
         for (Map.Entry<String, Object> entry : mdictionary.getEntriesPredictive(word)) {
-            String heading = entry.getKey();
-            String article = cleaHtmlArticle(mdictionary.getText((Long) entry.getValue()));
-            result.add(new DictionaryEntry(heading, article));
+            addEntry(result, entry);
         }
         return result;
     }
@@ -52,11 +50,21 @@ public class MDX implements IDictionary {
     public List<DictionaryEntry> readArticles(final String word) throws Exception {
         List<DictionaryEntry> result = new ArrayList<>();
         for (Map.Entry<String, Object> entry : mdictionary.getEntries(word)) {
-            String heading = entry.getKey();
-            String article = cleaHtmlArticle(mdictionary.getText((Long) entry.getValue()));
-            result.add(new DictionaryEntry(heading, article));
+            addEntry(result, entry);
         }
         return result;
+    }
+
+    private void addEntry(final List<DictionaryEntry> result, final Map.Entry<String, Object> entry) throws MDException {
+        if (entry.getValue() instanceof Long) {
+            result.add(new DictionaryEntry(entry.getKey(),
+                    cleaHtmlArticle(mdictionary.getText((Long) entry.getValue()))));
+        } else {
+            Long[] values = (Long[]) entry.getValue();
+            for (int i = 0; i < values.length; i++) {
+                result.add(new DictionaryEntry(entry.getKey(), cleaHtmlArticle(mdictionary.getText(values[i]))));
+            }
+        }
     }
 
     private String cleaHtmlArticle(final String mdictHtmlText) {
