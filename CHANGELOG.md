@@ -4,6 +4,6 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## 0.1.0
-* First release
+* First public release
 
 [Unreleased]: https://github.com/miurahr/omegat-plugin-skelton/compare/v0.1.0...HEAD
