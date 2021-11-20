@@ -1,6 +1,6 @@
-# OmegaT plugin for MDict dictionray format
+# MDict dictionary plugin for OmegaT
 
-OmegaT Plugin for [MDict](https://mdict.org/) dictionary.
+This is an OmegaT plugin to utilize [MDict](https://mdict.org/) dictionary on [OmegaT CAT(Computer-Aided Translation Tool) application](https://omegat.org/).
 This plugin supports MDict format version 2.0.
 
 A development status of the plugin is considered as `Alpha`.
