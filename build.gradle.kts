@@ -19,7 +19,7 @@ omegat {
 }
 
 dependencies {
-    packIntoJar("io.github.eb4j:mdict4j:0.1.4")
+    packIntoJar("io.github.eb4j:mdict4j:0.2.0")
     packIntoJar("org.jsoup:jsoup:1.14.3")
 }
 
