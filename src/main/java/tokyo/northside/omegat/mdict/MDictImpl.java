@@ -9,6 +9,7 @@ import org.jsoup.safety.Safelist;
 import org.jsoup.select.Elements;
 import org.omegat.core.dictionaries.DictionaryEntry;
 import org.omegat.core.dictionaries.IDictionary;
+import org.omegat.util.Log;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -108,7 +109,7 @@ public class MDictImpl implements IDictionary {
                 }
             }
         } catch (MDException | IOException e) {
-            e.printStackTrace();
+            Log.log(e);
         }
         return document.body().html();
     }
