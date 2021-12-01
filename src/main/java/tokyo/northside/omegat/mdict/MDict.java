@@ -62,7 +62,7 @@ public class MDict implements IDictionaryFactory {
      */
     @Override
     public IDictionary loadDict(final File file, final Language lang) throws Exception {
-        return new MDX(file);
+        return new MDictImpl(file);
     }
 
     /**
