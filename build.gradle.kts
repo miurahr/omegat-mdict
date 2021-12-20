@@ -11,8 +11,6 @@ plugins {
     id("com.palantir.git-version") version "0.12.3" apply false
 }
 
-version = "0.1.0"
-
 omegat {
     version = "5.5.0"
     pluginClass = "tokyo.northside.omegat.mdict.MDict"
@@ -70,6 +68,8 @@ if (dotgit.exists()) {
     }
 
     version = getProps(props).getProperty("version")
+} else {
+    version = "0.1.0"
 }
 
 tasks.register("writeVersionFile") {
