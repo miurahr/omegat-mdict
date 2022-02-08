@@ -17,17 +17,18 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MDictImpl implements IDictionary {
 
     private final MDictDictionary mdictionary;
     private final MDictDictionary mData;
 
-    public MDictImpl(final File mdxFile) throws MDException, IOException {
+    public MDictImpl(final File mdxFile) throws MDException {
         String mdxPath = mdxFile.getPath();
         mdictionary = MDictDictionary.loadDicitonary(mdxPath);
         MDictDictionary temp = null;
@@ -51,11 +52,11 @@ public class MDictImpl implements IDictionary {
      */
     @Override
     public List<DictionaryEntry> readArticlesPredictive(String word) throws Exception {
-        List<DictionaryEntry> result = new ArrayList<>();
-        for (Map.Entry<String, Object> entry : mdictionary.getEntriesPredictive(word)) {
-            addEntry(result, entry);
+        if (mdictionary.isKeyCaseSensitive()) {
+            return mdictionary.readArticlesPredictive(word).stream().map(this::getEntry).collect(Collectors.toList());
         }
-        return result;
+        String lower = word.toLowerCase(Locale.getDefault());
+        return mdictionary.readArticlesPredictive(lower).stream().map(this::getEntry).collect(Collectors.toList());
     }
 
     /**
@@ -66,24 +67,15 @@ public class MDictImpl implements IDictionary {
      */
     @Override
     public List<DictionaryEntry> readArticles(final String word) throws Exception {
-        List<DictionaryEntry> result = new ArrayList<>();
-        for (Map.Entry<String, Object> entry : mdictionary.getEntries(word)) {
-            addEntry(result, entry);
+        if (mdictionary.isKeyCaseSensitive()) {
+            return mdictionary.readArticles(word).stream().map(this::getEntry).collect(Collectors.toList());
         }
-        return result;
+        String lower = word.toLowerCase(Locale.getDefault());
+        return mdictionary.readArticles(lower).stream().map(this::getEntry).collect(Collectors.toList());
     }
 
-    private void addEntry(final List<DictionaryEntry> result, final Map.Entry<String, Object> entry) throws MDException {
-        if (entry.getValue() instanceof Long) {
-            result.add(new DictionaryEntry(entry.getKey(),
-                    retrieveDataAndUpdateLink(cleaHtmlArticle(mdictionary.getText((Long) entry.getValue())))));
-        } else {
-            Long[] values = (Long[]) entry.getValue();
-            for (Long value : values) {
-                result.add(new DictionaryEntry(entry.getKey(),
-                        retrieveDataAndUpdateLink(cleaHtmlArticle(mdictionary.getText(value)))));
-            }
-        }
+    private DictionaryEntry getEntry(final Map.Entry<String, String> entry) {
+        return new DictionaryEntry(entry.getKey(), retrieveDataAndUpdateLink(cleaHtmlArticle(entry.getValue())));
     }
 
     private String cleaHtmlArticle(final String mdictHtmlText) {
@@ -103,9 +95,9 @@ public class MDictImpl implements IDictionary {
                 String linkUrl = element.attr("src");
                 if (linkUrl.startsWith("file://pic/")) {
                     String targetKey = linkUrl.substring(6);
-                    byte[] rawData = getRawData(targetKey);
+                    byte[] rawData = mData.readData(targetKey);
                     element.attr("src",
-                            "data:image/png;base64," + convertImage2Base64("png", rawData));
+                            "data:image/png;base64," + convertImage2Base64(rawData));
                 }
             }
         } catch (MDException | IOException e) {
@@ -114,33 +106,18 @@ public class MDictImpl implements IDictionary {
         return document.body().html();
     }
 
-    private byte[] getRawData(final String targetKey) throws MDException {
-        byte[] result = null;
-        for (Map.Entry<String, Object> entry: mData.getEntries(targetKey)) {
-            if (entry.getKey().equals(targetKey)) {
-                Object value = entry.getValue();
-                if (value instanceof Long) {
-                    result = mData.getData((Long) value);
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
     /**
      * convert image data to base64.
-     * @param format image format.
      * @param data image data
      * @return base64 string
      * @throws IOException when conversion failed
      */
-    private static String convertImage2Base64(final String format, final byte[] data) throws IOException {
+    private static String convertImage2Base64(final byte[] data) throws IOException {
         byte[] bytes;
         Base64.Encoder base64Encoder = Base64.getEncoder();
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             final BufferedImage res = ImageIO.read(new ByteArrayInputStream(data));
-            ImageIO.write(res, format, baos);
+            ImageIO.write(res, "png", baos);
             baos.flush();
             bytes = baos.toByteArray();
         }

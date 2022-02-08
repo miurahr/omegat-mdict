@@ -16,13 +16,13 @@ omegat {
     pluginClass = "tokyo.northside.omegat.mdict.MDict"
 }
 
-dependencies {
-    packIntoJar("io.github.eb4j:mdict4j:0.2.3")
-    packIntoJar("org.jsoup:jsoup:1.14.3")
-}
-
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    packIntoJar("io.github.eb4j:mdict4j:0.2.4")
+    packIntoJar("org.jsoup:jsoup:1.14.3")
 }
 
 checkstyle {
