@@ -53,10 +53,9 @@ public class MDictImpl implements IDictionary {
     @Override
     public List<DictionaryEntry> readArticlesPredictive(String word) throws Exception {
         if (mdictionary.isKeyCaseSensitive()) {
-            return mdictionary.readArticlesPredictive(word).stream().map(this::getEntry).collect(Collectors.toList());
+            return getArticles(word, true);
         }
-        String lower = word.toLowerCase(Locale.getDefault());
-        return mdictionary.readArticlesPredictive(lower).stream().map(this::getEntry).collect(Collectors.toList());
+        return getArticles(word.toLowerCase(Locale.getDefault()), true);
     }
 
     /**
@@ -68,10 +67,17 @@ public class MDictImpl implements IDictionary {
     @Override
     public List<DictionaryEntry> readArticles(final String word) throws Exception {
         if (mdictionary.isKeyCaseSensitive()) {
+            return getArticles(word, false);
+        }
+        return getArticles(word.toLowerCase(Locale.getDefault()), false);
+    }
+
+    private List<DictionaryEntry> getArticles(final String word, final boolean predictive) throws Exception {
+        if (predictive) {
+            return mdictionary.readArticlesPredictive(word).stream().map(this::getEntry).collect(Collectors.toList());
+        } else {
             return mdictionary.readArticles(word).stream().map(this::getEntry).collect(Collectors.toList());
         }
-        String lower = word.toLowerCase(Locale.getDefault());
-        return mdictionary.readArticles(lower).stream().map(this::getEntry).collect(Collectors.toList());
     }
 
     private DictionaryEntry getEntry(final Map.Entry<String, String> entry) {
