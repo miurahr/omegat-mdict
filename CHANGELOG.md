@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+* check key case sensitivity for query and when
+  insensitive, qeury with lower case.
+* Bump versions
+  * mdict4j@0.2.4
+  * gradle omegat@1.5.7
+  * actions gradle-build-actions@v2
+  * actions setup-java@2.5.0
+ 
 ## [0.1.3]
 * Bump mdict4j@0.2.3
 * Support inline image
