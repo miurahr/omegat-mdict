@@ -43,9 +43,7 @@ public class MDictImpl implements IDictionary {
 
     /**
      * Read article's text. Matching is predictive, so e.g. supplying "term"
-     * will return articles for "term", "terminology", "termite", etc. The
-     * default implementation simply calls {@link #readArticles(String)} for
-     * backwards compatibility.
+     * will return articles for "term", "terminology", "termite", etc.
      *
      * @param word The word to look up in the dictionary
      * @return List of entries. May be empty, but cannot be null.
