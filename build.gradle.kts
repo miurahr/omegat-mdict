@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    packIntoJar("io.github.eb4j:mdict4j:0.2.4")
+    packIntoJar("io.github.eb4j:mdict4j:0.3.0")
     packIntoJar("org.jsoup:jsoup:1.14.3")
 }
 
