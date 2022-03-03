@@ -30,7 +30,7 @@ public class MDictImpl implements IDictionary {
 
     public MDictImpl(final File mdxFile) throws MDException {
         String mdxPath = mdxFile.getPath();
-        mdictionary = MDictDictionary.loadDicitonary(mdxPath);
+        mdictionary = MDictDictionary.loadDictionary(mdxPath);
         MDictDictionary temp = null;
         try {
             if (mdictionary.getMdxVersion().equals("2.0")) {
