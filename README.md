@@ -3,26 +3,14 @@
 This is an OmegaT plugin to utilize [MDict](https://mdict.org/) dictionary on [OmegaT CAT(Computer-Aided Translation Tool) application](https://omegat.org/).
 This plugin supports MDict format version 2.0.
 
-A development status of the plugin is considered as `Alpha`.
+# Give Up GitHub
 
-## Supported dictionary and format
+This project has given up GitHub.  ([See Software Freedom Conservancy's *Give Up  GitHub* site for details](https://GiveUpGitHub.org).)
 
-The plugin provide text content of dictionary. All images and sounds are ignored.
-The plugin also ignores text size. but respect color and type face. 
+You can now find this project at [CodeBerg.org](https://codeberg.org/miurahr/omegat-mdict) instead.
 
-### Known supported dictionary
+Any use of this project's code by GitHub Copilot, past or present, is done without our permission.  We do not consent to GitHub's use of this project's code in Copilot.
 
-(TBD)
+Join us; you can [give up GitHub](https://GiveUpGitHub.org) too!
 
-## Installation
-
-You can get a plugin jar file from zip distribution file.
-OmegaT plugin should be placed in `$HOME/.omegat/plugin` or `C:\Program Files\OmegaT\plugin`
-depending on your operating system.
-
-## License
-
-This project is distributed under the GNU general public license version 3 or later.
- 
- 
-Release staging repositories
+![Logo of the GiveUpGitHub campaign](https://sfconservancy.org/img/GiveUpGitHub.png)
