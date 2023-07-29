@@ -7,7 +7,7 @@ plugins {
     checkstyle
     distribution
     maven
-    id("org.omegat.gradle") version "1.5.7"
+    id("org.omegat.gradle") version "1.6.0"
     id("com.palantir.git-version") version "0.13.0" apply false
 }
 
